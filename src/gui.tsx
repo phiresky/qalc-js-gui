@@ -19,8 +19,8 @@ module QalcGui {
 	export class GUILine extends React.Component<{ line: GuiLineElement }, {}> {
 		render() {
 			return <div>
-					<p><code>{this.props.line.output}</code></p>
 					<p>> {this.props.line.input}</p>
+					<p><code>{this.props.line.output}</code></p>
 				</div>
 		}
 	}

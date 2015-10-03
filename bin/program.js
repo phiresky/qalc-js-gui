@@ -24,7 +24,7 @@ var QalcGui;
             _super.apply(this, arguments);
         }
         GUILine.prototype.render = function () {
-            return React.createElement("div", null, React.createElement("p", null, React.createElement("code", null, this.props.line.output)), React.createElement("p", null, "> ", this.props.line.input));
+            return React.createElement("div", null, React.createElement("p", null, "> ", this.props.line.input), React.createElement("p", null, React.createElement("code", null, this.props.line.output)));
         };
         return GUILine;
     })(React.Component);
