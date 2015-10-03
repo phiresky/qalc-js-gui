@@ -50,6 +50,11 @@ module QalcGui {
 		}
 	}
 }
-document.addEventListener('DOMContentLoaded', function() {
-	React.render(<QalcGui.GUI />, document.getElementById("gui"));
-});
+
+React.render(
+<div className="container">
+	<div className="page-header">
+		<h1>Qalc</h1>
+	</div>
+	<QalcGui.GUI />
+</div>, document.body);

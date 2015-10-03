@@ -54,6 +54,4 @@ var QalcGui;
     })(React.Component);
     QalcGui.GUI = GUI;
 })(QalcGui || (QalcGui = {}));
-document.addEventListener('DOMContentLoaded', function () {
-    React.render(React.createElement(QalcGui.GUI, null), document.getElementById("gui"));
-});
+React.render(React.createElement("div", {"className": "container"}, React.createElement("div", {"className": "page-header"}, React.createElement("h1", null, "Qalc")), React.createElement(QalcGui.GUI, null)), document.body);
