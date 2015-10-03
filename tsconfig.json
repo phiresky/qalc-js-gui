@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"out": "bin/program.js",
+		"jsx": "react"
+	},
+	"files": [
+		"typings/tsd.d.ts",
+		"src/gui.tsx"
+	]
+}
