@@ -19,8 +19,8 @@ module QalcGui {
 	export class GUILine extends React.Component<{ line: GuiLineElement }, {}> {
 		render() {
 			return <div>
-					<p>> {this.props.line.input}</p>
 					<p><code>{this.props.line.output}</code></p>
+					<p>> {this.props.line.input}</p>
 				</div>
 		}
 	}
@@ -32,7 +32,7 @@ module QalcGui {
 
 		addLine(line: GuiLineElement) {
 			const lines = this.state.lines.slice();
-			lines.push(line);
+			lines.unshift(line);
 			this.setState({ lines: lines });
 		}
 		keyPress(evt: KeyboardEvent) {
@@ -44,8 +44,8 @@ module QalcGui {
 		}
 		render() {
 			return <div>
-				{this.state.lines.map(line => <GUILine line={line} />) }
 				> <input onKeyPress={this.keyPress.bind(this) }/>
+				{this.state.lines.map(line => <GUILine line={line} />) }
 				</div>;
 		}
 	}

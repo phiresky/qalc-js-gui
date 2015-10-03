@@ -24,7 +24,7 @@ var QalcGui;
             _super.apply(this, arguments);
         }
         GUILine.prototype.render = function () {
-            return React.createElement("div", null, React.createElement("p", null, "> ", this.props.line.input), React.createElement("p", null, React.createElement("code", null, this.props.line.output)));
+            return React.createElement("div", null, React.createElement("p", null, React.createElement("code", null, this.props.line.output)), React.createElement("p", null, "> ", this.props.line.input));
         };
         return GUILine;
     })(React.Component);
@@ -37,7 +37,7 @@ var QalcGui;
         }
         GUI.prototype.addLine = function (line) {
             var lines = this.state.lines.slice();
-            lines.push(line);
+            lines.unshift(line);
             this.setState({ lines: lines });
         };
         GUI.prototype.keyPress = function (evt) {
@@ -48,7 +48,7 @@ var QalcGui;
             }
         };
         GUI.prototype.render = function () {
-            return React.createElement("div", null, this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }), "> ", React.createElement("input", {"onKeyPress": this.keyPress.bind(this)}));
+            return React.createElement("div", null, "> ", React.createElement("input", {"onKeyPress": this.keyPress.bind(this)}), this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }));
         };
         return GUI;
     })(React.Component);
