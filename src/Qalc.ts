@@ -12,13 +12,13 @@ module QalcLib {
 			bios: { url: "lib/sea"},
 			vga_bios: { url: "lib/vga"},
 			cdrom: { url: "lib/cd.js"},
-			initial_state: { url: "lib/state.js" },
+			initial_state: { url: "http://cdn.studium.sexy/state.js" },
 			autostart: true,
 			disable_keyboard: true,
 			disable_mouse: true
 		});
 		emulator.add_listener("download-progress", function(e) {
-			$("#loadingWait").text(`Loading: ${(e.loaded/1e7).toFixed(2)}/${(e.total/1e6).toFixed(2)} MByte`);
+			$("#loadingWait").text(`Loading: ${(e.loaded/1e7).toFixed(2)}/${(e.total/1e7).toFixed(2)} MByte`);
 		});
 		emulator.add_listener("emulator-ready", function(e) {
 			$("#loadingWait").text("");
