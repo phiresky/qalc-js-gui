@@ -1,6 +1,6 @@
 var QalcLib;
 (function (QalcLib) {
-    QalcLib.cache = "> ";
+    QalcLib.cache = "";
     var lastCallback;
     function init(readyCallback) {
         QalcLib.emulator = new V86Starter({
@@ -60,7 +60,7 @@ var QalcGui;
             _super.apply(this, arguments);
         }
         GUILine.prototype.render = function () {
-            return React.createElement("div", {"className": "gui-line"}, React.createElement("hr", null), React.createElement("p", null, "> ", this.props.line.input), React.createElement("p", null, React.createElement("code", null, this.props.line.output)));
+            return React.createElement("div", {"className": "gui-line"}, React.createElement("hr", null), React.createElement("p", null, "> ", this.props.line.input), React.createElement("pre", null, React.createElement("code", null, this.props.line.output)));
         };
         return GUILine;
     })(React.Component);
@@ -71,7 +71,7 @@ var QalcGui;
         function GUI(props) {
             _super.call(this, props);
             guiInst = this;
-            this.state = { ready: false, "lines": [{ "input": "88 mph to km/s", "output": "  88 * mph = 0.03933952(km / s)\n" }, { "input": "sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c", "output": "  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n" }, { "input": "testing", "output": "\n  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n" }] };
+            this.state = { ready: false, "lines": [{ "input": "88 mph to km/s", "output": "  88 * mph = 0.03933952(km / s)\n" }, { "input": "sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c", "output": "  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n" }, { "input": "testing", "output": "  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n" }] };
         }
         GUI.prototype.onReady = function () {
             this.state.ready = true;

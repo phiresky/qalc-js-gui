@@ -2,7 +2,7 @@ module QalcLib {
 	declare var V86Starter: any;
 	
 	export let emulator;
-	export let cache = "> ";
+	export let cache = "";
 	let lastCallback: (output:string) => void;
 	
 	export function init(readyCallback) {

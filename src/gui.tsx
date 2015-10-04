@@ -13,7 +13,7 @@ module QalcGui {
 		render() {
 			return <div className="gui-line"><hr />
 					<p>> {this.props.line.input}</p>
-					<p><code>{this.props.line.output}</code></p>
+					<pre><code>{this.props.line.output}</code></pre>
 				</div>
 		}
 	}
@@ -22,7 +22,7 @@ module QalcGui {
 		constructor(props) {
 			super(props);
 			guiInst = this;
-			this.state = {ready:false, "lines":[{"input":"88 mph to km/s","output":"  88 * mph = 0.03933952(km / s)\n"},{"input":"sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c","output":"  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n"},{"input":"testing","output":"\n  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n"}]}
+			this.state = {ready:false, "lines":[{"input":"88 mph to km/s","output":"  88 * mph = 0.03933952(km / s)\n"},{"input":"sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c","output":"  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n"},{"input":"testing","output":"  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n"}]}
 		}
 		onReady() {
 			this.state.ready = true;
