@@ -5,6 +5,7 @@
 	},
 	"files": [
 		"typings/tsd.d.ts",
+		"src/Qalc.ts",
 		"src/gui.tsx"
 	]
 }

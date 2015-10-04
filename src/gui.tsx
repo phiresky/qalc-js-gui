@@ -1,12 +1,4 @@
-module QalcLib {
-	export function qalculate(input: string): string {
-		// todo: insert actual qalc lib
-		try { return eval(input) }
-		catch (e) {
-			return `invalid input '${input}: ${e}'`;
-		}
-	}
-}
+
 
 module QalcGui {
 	interface GuiLineElement {
@@ -18,7 +10,7 @@ module QalcGui {
 	}
 	export class GUILine extends React.Component<{ line: GuiLineElement }, {}> {
 		render() {
-			return <div>
+			return <div className="gui-line"><hr />
 					<p>> {this.props.line.input}</p>
 					<p><code>{this.props.line.output}</code></p>
 				</div>
@@ -27,7 +19,8 @@ module QalcGui {
 	export class GUI extends React.Component<{}, GuiState> {
 		constructor(props) {
 			super(props);
-			this.state = { lines: [] };
+			(window as any).gui = this;
+			this.state = {"lines":[{"input":"88 mph to km/s","output":"  88 * mph = 0.03933952(km / s)\n"},{"input":"sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c","output":"  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n"},{"input":"testing","output":"\n  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n"}]}
 		}
 
 		addLine(line: GuiLineElement) {
@@ -38,19 +31,22 @@ module QalcGui {
 		keyPress(evt: KeyboardEvent) {
 			if (evt.charCode == 13) {// enter
 				const target = evt.target as HTMLInputElement;
-				this.addLine({ input: target.value, output: QalcLib.qalculate(target.value) });
+				const input = target.value.trim();
+				if(input.length > 0) QalcLib.qalculate(input, output => 
+					this.addLine({ input: input, output: output })
+				);
 				target.value = "";
 			}
 		}
 		render() {
 			return <div>
-				> <input onKeyPress={this.keyPress.bind(this) }/>
+				> <input onKeyPress={this.keyPress.bind(this) } size={100} />
 				{this.state.lines.map(line => <GUILine line={line} />) }
 				</div>;
 		}
 	}
 }
-
+QalcLib.init();
 React.render(
 <div className="container">
 	<div className="page-header">
