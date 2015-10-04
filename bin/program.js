@@ -8,8 +8,8 @@ var QalcLib;
             vga_memory_size: 2 * 1024 * 1024,
             bios: { url: "lib/sea" },
             vga_bios: { url: "lib/vga" },
-            cdrom: { url: "lib/cd" },
-            initial_state: { url: "lib/state" },
+            cdrom: { url: "lib/cd.js" },
+            initial_state: { url: "lib/state.js" },
             autostart: true,
             disable_keyboard: true,
             disable_mouse: true
