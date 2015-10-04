@@ -40,7 +40,7 @@ var QalcLib;
         var ignore = true;
         QalcLib.emulator.run();
         lastCallback = function (output) {
-            callback(output.substring(input.length + 3, output.length - 2));
+            callback(output.substring(input.length + 2, output.length - 2).trim());
             QalcLib.emulator.stop();
         };
         QalcLib.emulator.serial0_send(input + "\n");
@@ -71,7 +71,7 @@ var QalcGui;
         function GUI(props) {
             _super.call(this, props);
             guiInst = this;
-            this.state = { ready: false, "lines": [{ "input": "88 mph to km/s", "output": "  88 * mph = 0.03933952(km / s)\n" }, { "input": "sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c", "output": "  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n" }, { "input": "testing", "output": "  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n" }] };
+            this.state = { ready: false, "lines": [{ "input": "88 mph to km/s", "output": "88 * mph = 0.03933952(km / s)\n" }, { "input": "sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c", "output": "sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n" }, { "input": "testing", "output": "tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n" }] };
         }
         GUI.prototype.onReady = function () {
             this.state.ready = true;
@@ -95,7 +95,7 @@ var QalcGui;
             }
         };
         GUI.prototype.render = function () {
-            return React.createElement("div", null, "> ", React.createElement("input", {"disabled": !this.state.ready, "onKeyPress": this.keyPress.bind(this), "size": 100}), this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }));
+            return React.createElement("div", null, "> ", React.createElement("input", {"disabled": !this.state.ready, "onKeyPress": this.keyPress.bind(this)}), this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }));
         };
         return GUI;
     })(React.Component);

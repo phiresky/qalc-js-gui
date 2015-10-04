@@ -42,7 +42,7 @@ module QalcLib {
 		let ignore = true;
 		emulator.run();
 		lastCallback = output => {
-			callback(output.substring(input.length + 3, output.length - 2));
+			callback(output.substring(input.length + 2, output.length - 2).trim());
 			emulator.stop();
 		}
 		emulator.serial0_send(input+"\n");
