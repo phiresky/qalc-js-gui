@@ -8,7 +8,7 @@ var QalcLib;
             vga_memory_size: 2 * 1024 * 1024,
             bios: { url: "lib/sea" },
             vga_bios: { url: "lib/vga" },
-            cdrom: { url: "lib/cd.js" },
+            cdrom: { url: "lib/empty.iso" },
             initial_state: { url: "http://cdn.studium.sexy/state.js" },
             autostart: true,
             disable_keyboard: true,
