@@ -2,7 +2,7 @@ var QalcLib;
 (function (QalcLib) {
     QalcLib.cache = "> ";
     var lastCallback;
-    function init() {
+    function init(readyCallback) {
         QalcLib.emulator = new V86Starter({
             memory_size: 50 * 1024 * 1024,
             vga_memory_size: 2 * 1024 * 1024,
@@ -13,6 +13,13 @@ var QalcLib;
             autostart: true,
             disable_keyboard: true,
             disable_mouse: true
+        });
+        QalcLib.emulator.add_listener("download-progress", function (e) {
+            $("#loadingWait").text("Loading: " + (e.loaded / 1e6).toFixed(2) + "MByte");
+        });
+        QalcLib.emulator.add_listener("emulator-ready", function (e) {
+            $("#loadingWait").text("");
+            readyCallback();
         });
         QalcLib.emulator.add_listener("serial0-output-char", function (char) {
             if (char === "\r")
@@ -58,17 +65,22 @@ var QalcGui;
         return GUILine;
     })(React.Component);
     QalcGui.GUILine = GUILine;
+    var guiInst;
     var GUI = (function (_super) {
         __extends(GUI, _super);
         function GUI(props) {
             _super.call(this, props);
-            window.gui = this;
-            this.state = { "lines": [{ "input": "88 mph to km/s", "output": "  88 * mph = 0.03933952(km / s)\n" }, { "input": "sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c", "output": "  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n" }, { "input": "testing", "output": "\n  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n" }] };
+            guiInst = this;
+            this.state = { ready: false, "lines": [{ "input": "88 mph to km/s", "output": "  88 * mph = 0.03933952(km / s)\n" }, { "input": "sqrt(2 * (6 million tons * 500000 MJ/kg) / (100000 pounds))/c", "output": "  sqrt((2 * ((6 * million * tonne * 500000 * megajoule) / kilogram)) / (100000 * pound)) / speed_of_light = approx. 1.2131711\n" }, { "input": "testing", "output": "\n  tonne * e * second * tonne * inch * gram = approx. 2718.2818 kg^3 * in*s\n" }] };
         }
+        GUI.prototype.onReady = function () {
+            this.state.ready = true;
+            this.setState(this.state);
+        };
         GUI.prototype.addLine = function (line) {
             var lines = this.state.lines.slice();
             lines.unshift(line);
-            this.setState({ lines: lines });
+            this.setState({ lines: lines, ready: true });
         };
         GUI.prototype.keyPress = function (evt) {
             var _this = this;
@@ -83,11 +95,11 @@ var QalcGui;
             }
         };
         GUI.prototype.render = function () {
-            return React.createElement("div", null, "> ", React.createElement("input", {"onKeyPress": this.keyPress.bind(this), "size": 100}), this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }));
+            return React.createElement("div", null, "> ", React.createElement("input", {"disabled": !this.state.ready, "onKeyPress": this.keyPress.bind(this), "size": 100}), this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }));
         };
         return GUI;
     })(React.Component);
     QalcGui.GUI = GUI;
+    QalcLib.init(function () { return guiInst.onReady(); });
 })(QalcGui || (QalcGui = {}));
-QalcLib.init();
-React.render(React.createElement("div", {"className": "container"}, React.createElement("div", {"className": "page-header"}, React.createElement("h1", null, "Qalc")), React.createElement(QalcGui.GUI, null)), document.body);
+React.render(React.createElement("div", {"className": "container"}, React.createElement("div", {"className": "page-header"}, React.createElement("h1", null, "Qalc ", React.createElement("small", {"id": "loadingWait"}, "Loading"))), React.createElement(QalcGui.GUI, null)), document.body);

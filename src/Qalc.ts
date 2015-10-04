@@ -5,7 +5,7 @@ module QalcLib {
 	export let cache = "> ";
 	let lastCallback: (output:string) => void;
 	
-	export function init() {
+	export function init(readyCallback) {
 		emulator = new V86Starter({
 			memory_size: 50 * 1024 * 1024,
 			vga_memory_size: 2 * 1024 * 1024,
@@ -16,6 +16,13 @@ module QalcLib {
 			autostart: true,
 			disable_keyboard: true,
 			disable_mouse: true
+		});
+		emulator.add_listener("download-progress", function(e) {
+			$("#loadingWait").text(`Loading: ${(e.loaded/1e6).toFixed(2)}MByte`);
+		});
+		emulator.add_listener("emulator-ready", function(e) {
+			$("#loadingWait").text("");
+			readyCallback();
 		});
 		emulator.add_listener("serial0-output-char", function(char) {
 			if(char === "\r") return;
