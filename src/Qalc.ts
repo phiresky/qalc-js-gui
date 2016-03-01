@@ -12,7 +12,7 @@ module QalcLib {
 			bios: { url: "lib/sea"},
 			vga_bios: { url: "lib/vga"},
 			cdrom: { url: "lib/empty.iso"},
-			initial_state: { url: "http://cdn.studium.sexy/state.js" },
+			initial_state: { url: "lib/state.js" },
 			autostart: true,
 			disable_keyboard: true,
 			disable_mouse: true

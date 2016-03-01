@@ -9,7 +9,7 @@ var QalcLib;
             bios: { url: "lib/sea" },
             vga_bios: { url: "lib/vga" },
             cdrom: { url: "lib/empty.iso" },
-            initial_state: { url: "http://cdn.studium.sexy/state.js" },
+            initial_state: { url: "lib/state.js" },
             autostart: true,
             disable_keyboard: true,
             disable_mouse: true
@@ -60,10 +60,17 @@ var QalcGui;
             _super.apply(this, arguments);
         }
         GUILine.prototype.render = function () {
-            return React.createElement("div", {"className": "gui-line"}, React.createElement("hr", null), React.createElement("p", null, "> ", this.props.line.input), React.createElement("pre", null, React.createElement("code", null, this.props.line.output)));
+            return React.createElement("div", {className: "gui-line"}, 
+                React.createElement("hr", null), 
+                React.createElement("p", null, 
+                    "> ", 
+                    this.props.line.input), 
+                React.createElement("pre", null, 
+                    React.createElement("code", null, this.props.line.output)
+                ));
         };
         return GUILine;
-    })(React.Component);
+    }(React.Component));
     QalcGui.GUILine = GUILine;
     var guiInst;
     var GUI = (function (_super) {
@@ -86,20 +93,29 @@ var QalcGui;
             var _this = this;
             if (evt.charCode == 13) {
                 var target = evt.target;
-                var input = target.value.trim();
-                if (input.length > 0)
-                    QalcLib.qalculate(input, function (output) {
-                        return _this.addLine({ input: input, output: output });
+                var input_1 = target.value.trim();
+                if (input_1.length > 0)
+                    QalcLib.qalculate(input_1, function (output) {
+                        return _this.addLine({ input: input_1, output: output });
                     });
                 target.value = "";
             }
         };
         GUI.prototype.render = function () {
-            return React.createElement("div", null, "> ", React.createElement("input", {"disabled": !this.state.ready, "onKeyPress": this.keyPress.bind(this)}), this.state.lines.map(function (line) { return React.createElement(GUILine, {"line": line}); }));
+            return React.createElement("div", null, 
+                "> ", 
+                React.createElement("input", {disabled: !this.state.ready, onKeyPress: this.keyPress.bind(this)}), 
+                this.state.lines.map(function (line) { return React.createElement(GUILine, {line: line}); }));
         };
         return GUI;
-    })(React.Component);
+    }(React.Component));
     QalcGui.GUI = GUI;
     QalcLib.init(function () { return guiInst.onReady(); });
 })(QalcGui || (QalcGui = {}));
-React.render(React.createElement("div", {"className": "container"}, React.createElement("div", {"className": "page-header"}, React.createElement("h1", null, "Qalc ", React.createElement("small", {"id": "loadingWait"}, "Loading"))), React.createElement(QalcGui.GUI, null)), document.body);
+React.render(React.createElement("div", {className: "container"}, 
+    React.createElement("div", {className: "page-header"}, 
+        React.createElement("h1", null, 
+            "Qalc ", 
+            React.createElement("small", {id: "loadingWait"}, "Loading"))
+    ), 
+    React.createElement(QalcGui.GUI, null)), document.body);
